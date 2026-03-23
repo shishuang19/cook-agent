@@ -9,27 +9,6 @@
   </head>
   <body class="orbit-body orbit-grid">
     <main class="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-6 py-8 lg:px-10">
-      <header class="glass-panel mb-8 overflow-hidden rounded-[32px] px-6 py-6 lg:px-10 lg:py-8">
-        <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div class="max-w-3xl">
-            <p class="eyebrow mb-4">Kitchen Orbit / Cook RAG Frontend</p>
-            <h1 class="mb-4 max-w-2xl text-4xl font-semibold leading-tight text-stone-50 lg:text-6xl">
-              把菜谱问答、探索检索和下一阶段 GraphRAG 入口先落成一个前端壳层。
-            </h1>
-            <p class="max-w-2xl text-base leading-7 text-stone-300 lg:text-lg">
-              这一版先实现两条核心链路：自然语言问答交互页、食谱检索浏览页。页面默认支持本地 mock，
-              后续可直接改为对接 FastAPI 接口。
-            </p>
-          </div>
-          <div class="flex flex-col gap-3 lg:items-end">
-            <span class="status-pill">Static UI Ready</span>
-            <p class="max-w-sm text-sm leading-6 text-stone-400">
-              建议下一步把 `/api/chat` 和 `/api/search` 接进来，再补用户画像、图谱探索和图片上传入口。
-            </p>
-          </div>
-        </div>
-      </header>
-
       <section class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <article class="glass-panel rounded-[28px] p-6 lg:p-8">
           <div class="mb-6 flex items-center justify-between">
@@ -38,26 +17,6 @@
               <h2 class="text-2xl font-semibold text-stone-100">问答交互页</h2>
             </div>
             <a class="orbit-button" href="./qa.html">打开页面</a>
-          </div>
-          <p class="mb-6 max-w-2xl text-sm leading-7 text-stone-300 lg:text-base">
-            用于承载“今天吃什么”“这道菜怎么做”“有什么清淡晚餐推荐”这类自然语言问答。界面保留会话历史、推荐问题、回答状态和引用卡位。
-          </p>
-          <div class="grid gap-4 md:grid-cols-3">
-            <div class="feature-card">
-              <span class="feature-number">A1</span>
-              <p class="feature-title">会话历史</p>
-              <p class="feature-copy">保留上下文、支持快捷追问与重新提问。</p>
-            </div>
-            <div class="feature-card">
-              <span class="feature-number">A2</span>
-              <p class="feature-title">推荐提问</p>
-              <p class="feature-copy">为用户提供起始问题和预设场景入口。</p>
-            </div>
-            <div class="feature-card">
-              <span class="feature-number">A3</span>
-              <p class="feature-title">接口预留</p>
-              <p class="feature-copy">支持本地 mock 和后续 `/api/chat` 切换。</p>
-            </div>
           </div>
         </article>
 
@@ -69,55 +28,6 @@
             </div>
             <a class="orbit-button orbit-button--ghost" href="./search.html">打开页面</a>
           </div>
-          <p class="mb-6 text-sm leading-7 text-stone-300 lg:text-base">
-            用于分类浏览、关键词检索、时长和难度过滤，后续可作为混合检索、图谱探索、多模态检索的统一入口。
-          </p>
-          <div class="space-y-3">
-            <div class="mini-stat">
-              <span>浏览模式</span>
-              <strong>分类 + 筛选 + 搜索</strong>
-            </div>
-            <div class="mini-stat">
-              <span>后续扩展</span>
-              <strong>图谱关系推荐 / 图片搜菜</strong>
-            </div>
-            <div class="mini-stat">
-              <span>接口规划</span>
-              <strong>`/api/search` + `/api/recommend`</strong>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="mt-6 grid gap-6 lg:grid-cols-3">
-        <article class="glass-panel rounded-[28px] p-6">
-          <p class="eyebrow mb-3">Tech Stack</p>
-          <h3 class="mb-4 text-xl font-semibold text-stone-100">前端技术</h3>
-          <ul class="space-y-3 text-sm leading-6 text-stone-300">
-            <li>HTML5 页面结构</li>
-            <li>JavaScript 负责状态与 mock 接口</li>
-            <li>Tailwind CSS + 自定义 CSS 变量构建视觉层</li>
-          </ul>
-        </article>
-
-        <article class="glass-panel rounded-[28px] p-6">
-          <p class="eyebrow mb-3">Routing</p>
-          <h3 class="mb-4 text-xl font-semibold text-stone-100">页面结构</h3>
-          <ul class="space-y-3 text-sm leading-6 text-stone-300">
-            <li>`index.html` 作为入口与导航页</li>
-            <li>`qa.html` 承载问答交互</li>
-            <li>`search.html` 承载食谱检索</li>
-          </ul>
-        </article>
-
-        <article class="glass-panel rounded-[28px] p-6">
-          <p class="eyebrow mb-3">API Ready</p>
-          <h3 class="mb-4 text-xl font-semibold text-stone-100">对接策略</h3>
-          <ul class="space-y-3 text-sm leading-6 text-stone-300">
-            <li>默认使用内置示例数据保证页面可演示</li>
-            <li>提供 `window.KITCHEN_ORBIT_CONFIG` 作为接口配置入口</li>
-            <li>后续接入 FastAPI 时无需重写页面结构</li>
-          </ul>
         </article>
       </section>
     </main>

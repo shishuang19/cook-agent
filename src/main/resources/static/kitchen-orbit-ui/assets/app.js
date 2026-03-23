@@ -758,10 +758,9 @@
     const input = document.getElementById("chat-input");
     const sendButton = document.getElementById("send-button");
     const suggestionList = document.getElementById("suggestion-list");
-    const streamToggle = document.getElementById("stream-toggle");
     const detailToggle = document.getElementById("citation-detail-toggle");
 
-    if (!messages || !input || !sendButton || !suggestionList || !streamToggle) {
+    if (!messages || !input || !sendButton || !suggestionList) {
       return;
     }
 
@@ -809,7 +808,7 @@
       sendButton.style.opacity = "0.7";
 
       try {
-        if (streamToggle.checked && shouldUseApi()) {
+        if (shouldUseApi()) {
           const streamView = createStreamingAssistantMessage(messages);
           removeTyping();
           const streamResult = await askAssistantViaApiStream(question, qaState, {
