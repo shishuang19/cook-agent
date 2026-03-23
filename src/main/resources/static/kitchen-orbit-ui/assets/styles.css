@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap");
+
+:root {
+  --bg-1: #140d0a;
+  --bg-2: #2d1a12;
+  --panel: rgba(33, 24, 21, 0.72);
+  --panel-strong: rgba(48, 31, 24, 0.9);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f5f5f4;
+  --muted: #d6d3d1;
+  --soft: #a8a29e;
+  --accent: #fb923c;
+  --accent-2: #facc15;
+  --accent-3: #22c55e;
+  --shadow: 0 30px 70px rgba(0, 0, 0, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(251, 146, 60, 0.16), transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.12), transparent 28%),
+    linear-gradient(135deg, var(--bg-1), #120d0d 38%, var(--bg-2) 100%);
+  min-height: 100vh;
+}
+
+.orbit-grid::before,
+.orbit-grid::after {
+  content: "";
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbit-grid::before {
+  top: 8%;
+  right: 7%;
+  width: 320px;
+  height: 320px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.18), transparent 70%);
+  filter: blur(22px);
+}
+
+.orbit-grid::after {
+  bottom: 8%;
+  left: 4%;
+  width: 280px;
+  height: 280px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.14), transparent 70%);
+  filter: blur(18px);
+}
+
+.glass-panel {
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.eyebrow {
+  color: var(--accent-2);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.status-pill,
+.orbit-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(251, 146, 60, 0.26);
+  border-radius: 999px;
+  background: rgba(251, 146, 60, 0.1);
+  color: #ffedd5;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.status-pill::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  box-shadow: 0 0 0 0.24rem rgba(251, 146, 60, 0.14);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #fef08a, #f97316 72%);
+  box-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
+}
+
+.orbit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.95rem 1.25rem;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  box-shadow: 0 16px 35px rgba(234, 88, 12, 0.35);
+}
+
+.orbit-button:hover {
+  transform: translateY(-1px);
+}
+
+.orbit-button--ghost {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f4;
+}
+
+.feature-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.feature-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: rgba(250, 204, 21, 0.12);
+  color: #fde68a;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.feature-title {
+  margin: 0.85rem 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.feature-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.mini-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.95rem 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.mini-stat strong {
+  color: var(--text);
+  font-weight: 600;
+  text-align: right;
+}
+
+.orbit-input,
+.orbit-select,
+.orbit-textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 0.95rem 1rem;
+  outline: none;
+}
+
+.orbit-select {
+  appearance: none;
+}
+
+.orbit-input::placeholder,
+.orbit-textarea::placeholder {
+  color: var(--soft);
+}
+
+.orbit-input:focus,
+.orbit-select:focus,
+.orbit-textarea:focus {
+  border-color: rgba(251, 146, 60, 0.56);
+  box-shadow: 0 0 0 0.22rem rgba(251, 146, 60, 0.14);
+}
+
+.chat-bubble {
+  border-radius: 28px;
+  padding: 1rem 1.1rem;
+  line-height: 1.8;
+}
+
+.chat-bubble--assistant {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-bubble--user {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.18), rgba(234, 88, 12, 0.08));
+  border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+.source-card {
+  border-radius: 22px;
+  padding: 0.8rem 0.9rem;
+  background: rgba(250, 204, 21, 0.08);
+  border: 1px solid rgba(250, 204, 21, 0.14);
+}
+
+.recipe-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 1.1rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    linear-gradient(135deg, rgba(251, 146, 60, 0.06), transparent 48%);
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(251, 146, 60, 0.26);
+}
+
+.recipe-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e7e5e4;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 768px) {
+  .orbit-button,
+  .orbit-chip,
+  .status-pill {
+    min-height: 44px;
+  }
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kitchen Orbit / 问答交互</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body class="orbit-body orbit-grid">
+    <main class="mx-auto min-h-screen w-full max-w-7xl px-5 py-5 lg:px-8">
+      <div class="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <aside class="glass-panel rounded-[30px] p-5 lg:p-6">
+          <div class="mb-8 flex items-start justify-between">
+            <div>
+              <p class="eyebrow mb-2">Kitchen Orbit</p>
+              <h1 class="text-2xl font-semibold text-stone-100">问答交互页</h1>
+            </div>
+            <a class="orbit-chip" href="./index.html">返回</a>
+          </div>
+
+          <section class="mb-8">
+            <div class="mb-3 flex items-center justify-between">
+              <h2 class="text-sm font-medium uppercase tracking-[0.28em] text-stone-400">快捷问题</h2>
+              <span class="status-dot"></span>
+            </div>
+            <div id="suggestion-list" class="flex flex-wrap gap-2"></div>
+          </section>
+
+          <section class="mb-8">
+            <h2 class="mb-3 text-sm font-medium uppercase tracking-[0.28em] text-stone-400">能力说明</h2>
+            <div class="space-y-3 text-sm leading-6 text-stone-300">
+              <p>当前页面默认走真实后端接口，便于直接联调对话链路。</p>
+              <p>会显示 intent、route、retrievalCount 等调试字段用于验收。</p>
+              <p>右侧内容区包括会话消息、引用来源和推荐追问。</p>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="mb-3 text-sm font-medium uppercase tracking-[0.28em] text-stone-400">会话信息</h2>
+            <div class="space-y-3">
+              <div class="mini-stat">
+                <span>模式</span>
+                <strong>Cook Assistant</strong>
+              </div>
+              <div class="mini-stat">
+                <span>接入方式</span>
+                <strong>API First</strong>
+              </div>
+              <div class="mini-stat">
+                <span>下一步</span>
+                <strong>联调 /api/session + /api/chat</strong>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="glass-panel flex min-h-[80vh] flex-col rounded-[30px] p-4 lg:p-5">
+          <div class="mb-4 flex flex-col gap-4 rounded-[24px] border border-white/10 bg-white/5 p-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p class="eyebrow mb-2">Conversation Workspace</p>
+              <h2 class="text-2xl font-semibold text-stone-100">从一个问题开始构建晚餐方案</h2>
+            </div>
+            <div class="flex gap-3 text-sm text-stone-300">
+              <span class="orbit-chip">引用卡位</span>
+              <span class="orbit-chip">来源分组</span>
+              <span class="orbit-chip">追问推荐</span>
+              <span class="orbit-chip">实时流式</span>
+              <label class="orbit-chip cursor-pointer">
+                <input id="citation-detail-toggle" type="checkbox" class="h-4 w-4 accent-[#f97316]" checked />
+                <span>证据细节</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="chat-messages" class="flex-1 space-y-4 overflow-y-auto px-1 pb-4"></div>
+
+          <div class="mt-4 rounded-[24px] border border-white/10 bg-[rgba(255,255,255,0.04)] p-4">
+            <div class="mb-3 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.24em] text-stone-400">
+              <span>Ask Anything</span>
+              <span class="inline-flex items-center gap-2">
+                <span class="status-dot"></span>
+                本地演示可用
+              </span>
+            </div>
+            <div class="flex flex-col gap-3 lg:flex-row">
+              <textarea
+                id="chat-input"
+                rows="3"
+                class="orbit-textarea min-h-[112px] flex-1"
+                placeholder="例如：今天吃什么？最好 30 分钟内能做完，口味清淡一点。"
+              ></textarea>
+              <div class="flex w-full flex-col gap-3 lg:w-[220px]">
+                <label class="flex items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-stone-300">
+                  <span>真实流式输出</span>
+                  <input id="stream-toggle" type="checkbox" class="h-4 w-4 accent-[#f97316]" />
+                </label>
+                <button id="send-button" class="orbit-button h-[56px] w-full">发送问题</button>
+                <p class="text-xs leading-6 text-stone-500">
+                  可通过 URL 参数覆盖地址，例如 ?apiBaseUrl=http://localhost:8080
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script>
+      window.KITCHEN_ORBIT_CONFIG = {
+        apiBaseUrl: "",
+        autoConnectApi: true,
+        sessionEndpoint: "/api/session",
+        chatEndpoint: "/api/chat",
+        chatStreamEndpoint: "/api/chat/stream",
+        fallbackToMock: false,
+      };
+    </script>
+    <script src="./assets/app.js"></script>
+    <script>
+      window.KitchenOrbit.initQA();
+    </script>
+  </body>
+</html>

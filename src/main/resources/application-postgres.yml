@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/cook_agent
+    username: cook_agent
+    password: cook_agent
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+app:
+  storage:
+    mode: postgres
+  search:
+    hybrid:
+      enabled: true

@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: cook-agent-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cook_agent
+      POSTGRES_USER: cook_agent
+      POSTGRES_PASSWORD: cook_agent
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

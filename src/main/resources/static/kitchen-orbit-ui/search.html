@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kitchen Orbit / 食谱检索</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body class="orbit-body orbit-grid">
+    <main class="mx-auto min-h-screen w-full max-w-7xl px-5 py-5 lg:px-8">
+      <header class="glass-panel mb-5 rounded-[30px] p-6 lg:p-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="eyebrow mb-3">Kitchen Orbit Search</p>
+            <h1 class="mb-3 text-4xl font-semibold leading-tight text-stone-100">食谱检索页</h1>
+            <p class="max-w-2xl text-sm leading-7 text-stone-300 lg:text-base">
+              先实现关键词检索、分类、难度和时长过滤。后续可以把混合检索、图谱关系推荐和图像搜菜合并到这里。
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <a class="orbit-chip" href="./index.html">首页</a>
+            <a class="orbit-button" href="./qa.html">去问答页</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="grid gap-5 lg:grid-cols-[340px_minmax(0,1fr)]">
+        <aside class="glass-panel rounded-[30px] p-5 lg:p-6">
+          <div class="mb-5">
+            <p class="eyebrow mb-2">Search Filters</p>
+            <h2 class="text-2xl font-semibold text-stone-100">筛选条件</h2>
+          </div>
+
+          <div class="space-y-5">
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">关键词</label>
+              <input id="search-input" class="orbit-input" placeholder="搜索菜名、食材或做法" />
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">分类</label>
+              <select id="category-filter" class="orbit-select">
+                <option value="">全部分类</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">难度</label>
+              <select id="difficulty-filter" class="orbit-select">
+                <option value="">全部难度</option>
+                <option value="新手友好">新手友好</option>
+                <option value="进阶">进阶</option>
+                <option value="宴客">宴客</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">时长</label>
+              <select id="time-filter" class="orbit-select">
+                <option value="">全部时长</option>
+                <option value="15">15 分钟内</option>
+                <option value="30">30 分钟内</option>
+                <option value="45">45 分钟内</option>
+                <option value="999">45 分钟以上</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">排序</label>
+              <select id="sort-filter" class="orbit-select">
+                <option value="relevance">相关度优先</option>
+                <option value="score_desc">评分优先</option>
+                <option value="time_asc">时长从短到长</option>
+                <option value="time_desc">时长从长到短</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium text-stone-300">每页数量</label>
+              <select id="page-size-filter" class="orbit-select">
+                <option value="6">6</option>
+                <option value="12" selected>12</option>
+                <option value="24">24</option>
+              </select>
+            </div>
+
+            <button id="reset-filters" class="orbit-button orbit-button--ghost w-full">重置筛选</button>
+          </div>
+
+          <div class="mt-8 space-y-3">
+            <div class="mini-stat">
+              <span>当前模式</span>
+              <strong>本地静态演示</strong>
+            </div>
+            <div class="mini-stat">
+              <span>后端接口</span>
+              <strong>`/api/search` 预留</strong>
+            </div>
+            <div class="mini-stat">
+              <span>扩展入口</span>
+              <strong>图谱推荐 / 图片检索</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="space-y-5">
+          <div class="glass-panel rounded-[30px] p-5 lg:p-6">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p class="eyebrow mb-2">Recipe Flow</p>
+                <h2 class="text-2xl font-semibold text-stone-100">探索菜谱库</h2>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button class="orbit-chip recipe-preset" data-query="鸡肉">鸡肉</button>
+                <button class="orbit-chip recipe-preset" data-query="快手">快手菜</button>
+                <button class="orbit-chip recipe-preset" data-query="清淡">清淡</button>
+                <button class="orbit-chip recipe-preset" data-query="汤">汤</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel rounded-[30px] p-5 lg:p-6">
+            <div class="mb-5 flex items-center justify-between">
+              <div>
+                <p class="text-sm uppercase tracking-[0.24em] text-stone-400">Results</p>
+                <h3 id="result-summary" class="mt-2 text-xl font-semibold text-stone-100"></h3>
+              </div>
+              <span class="status-pill">Hybrid Search Ready</span>
+            </div>
+            <div class="mb-5 flex items-center justify-between rounded-[16px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-stone-300">
+              <button id="prev-page" type="button" class="orbit-chip border-0">上一页</button>
+              <span id="page-indicator" class="text-xs uppercase tracking-[0.2em] text-stone-400">第 1/1 页</span>
+              <button id="next-page" type="button" class="orbit-chip border-0">下一页</button>
+            </div>
+            <div id="recipe-grid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script>
+      window.KITCHEN_ORBIT_CONFIG = {
+        apiBaseUrl: "http://localhost:8080",
+        autoConnectApi: true,
+        searchEndpoint: "/api/search",
+        fallbackToMock: true,
+        searchDefaultPageSize: 12,
+        searchDefaultSortBy: "relevance",
+      };
+    </script>
+    <script src="./assets/app.js"></script>
+    <script>
+      window.KitchenOrbit.initSearch();
+    </script>
+  </body>
+</html>
