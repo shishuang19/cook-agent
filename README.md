@@ -32,60 +32,51 @@ kitchen-orbit-ui/ # 前端页面与静态资源
 docs/cook/        # 可提交的菜谱文档
 ```
 
-## 快速启动
+## docker 部署
+
+### 方式 A：仅数据库容器化（推荐先用这个）
+
+当前仓库已提供 `docker/docker-compose.yml`，可以先把 PostgreSQL + PGvector 跑起来，再本地启动后端。
+
+1. 启动数据库容器
 
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
+docker compose -f docker/docker-compose.yml up -d
 ```
 
-健康检查：`GET /health`
+2. 检查容器状态
 
-## API 概览
+```bash
+docker ps | grep cook-agent-postgres
+```
 
-- `POST /api/session`：创建会话
-- `POST /api/chat`：非流式问答
-- `POST /api/chat/stream`：SSE 流式问答
-- `POST /api/search`：菜谱检索
+3. 启动后端（连接 Docker 中的 PostgreSQL）
+
+```bash
+# 真实模型
+QWEN_API_KEY=你的Key ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
+
+# 或本地演示（不调真实模型）
+LLM_MOCK_ENABLED=true ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
+```
+
+```
 
 ## 图片占位（请你后续补图）
 
 > 下面是建议插图位置与建议内容，我已预留标题，你可以直接替换为你的截图链接。
 
-### 1) 系统架构图（建议放 Mermaid 导出图）
-
-![系统架构图占位](./docs/cook/_images/architecture-placeholder.png)
 
 建议放图内容：
 - 前端 -> API -> 编排层 -> RAG/Memory/Recipe -> 数据库/模型服务的完整链路
 
-### 2) 问答页面截图（非流式）
+### 1) 问答页面截图
 
-![问答页面占位](./docs/cook/_images/qa-non-stream-placeholder.png)
+![问答页面占位](./docs/images/qa.png)
 
-建议放图内容：
-- 输入问题后返回结构化回答 + 来源 citations
 
-### 3) 流式输出截图（实时增量）
+### 2) 检索页面截图
 
-![流式输出占位](./docs/cook/_images/qa-stream-placeholder.png)
+![检索页面占位](./docs/images/search.png)
 
-建议放图内容：
-- 勾选“真实流式输出”后，逐段增量渲染过程
 
-### 4) 检索页面截图
-
-![检索页面占位](./docs/cook/_images/search-placeholder.png)
-
-建议放图内容：
-- 关键词检索结果、筛选项和排序效果
-
-### 5) 数据导入/评测结果截图
-
-![导入评测占位](./docs/cook/_images/etl-eval-placeholder.png)
-
-建议放图内容：
-- 导入统计（recipe/section/chunk）与基础评测结果
-
-## 说明
-
-- 当前远程提交策略：代码全量提交；文档仅保留 `docs/cook`；不提交根目录 `prd.md`。
