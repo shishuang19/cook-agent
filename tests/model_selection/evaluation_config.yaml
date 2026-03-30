@@ -1,0 +1,48 @@
+################################################################################
+# Cook-Agent Embedding & Rerank 模型评估配置
+################################################################################
+
+# 数据集路径（相对于项目根目录）
+datasets:
+  embedding: tests/datasets/embedding_test_data.json
+  rerank: tests/datasets/rerank_test_data.json
+
+# 输出目录
+output:
+  dir: tests/results
+  report_filename: model_selection_report.md
+  metrics_filename: metrics_raw.json
+
+# 待评估的 Embedding 模型列表
+embedding_models:
+  - BAAI/bge-large-zh-v1.5
+  - BAAI/bge-base-zh-v1.5
+  - BAAI/bge-m3
+  - sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+
+# 待评估的 Rerank 模型列表
+rerank_models:
+  - BAAI/bge-reranker-v2-m3
+  - cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+
+# 评估参数
+evaluation:
+  # 检索截断位置
+  k_values: [5, 10]
+  # 是否测量延迟
+  measure_latency: true
+  # 延迟测量重复次数（取平均值）
+  latency_repeat: 3
+  # 是否测量内存占用
+  measure_memory: true
+  # 批量编码大小（较大的 batch 能提升吞吐量）
+  batch_size: 32
+
+# 模型选型决策阈值
+thresholds:
+  # NDCG@5 最低要求
+  min_ndcg_at_5: 0.6
+  # Recall@10 最低要求
+  min_recall_at_10: 0.7
+  # 单次查询最大可接受延迟（毫秒）
+  max_latency_ms: 200

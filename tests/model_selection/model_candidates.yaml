@@ -1,0 +1,121 @@
+################################################################################
+# Cook-Agent 候选模型详细信息
+# 包含 Embedding 模型和 Rerank 模型的参数、性能特征和适用场景对比
+################################################################################
+
+embedding_models:
+  - id: bge-large-zh-v1.5
+    full_name: BAAI/bge-large-zh-v1.5
+    provider: BAAI (Beijing Academy of Artificial Intelligence)
+    dimension: 1024
+    max_sequence_length: 512
+    language: zh
+    model_size_gb: 1.3
+    description: >
+      专为中文优化的大规模 Embedding 模型，在 CMTEB 中文文本嵌入基准上表现优异。
+      适合对检索质量要求最高的场景，是中文 RAG 的首选模型。
+    pros:
+      - 中文检索性能最优
+      - 在 CMTEB 基准排名靠前
+      - 支持 Instruction-following 前缀增强检索效果
+    cons:
+      - 模型体积较大（1.3 GB），推理延迟相对较高
+      - 需要 GPU 加速才能满足高并发需求
+    recommended_use: 生产环境，对效果要求高的场景
+    huggingface_url: https://huggingface.co/BAAI/bge-large-zh-v1.5
+
+  - id: bge-base-zh-v1.5
+    full_name: BAAI/bge-base-zh-v1.5
+    provider: BAAI
+    dimension: 768
+    max_sequence_length: 512
+    language: zh
+    model_size_gb: 0.4
+    description: >
+      中等规模的中文 Embedding 模型，在效果和推理速度之间取得较好平衡。
+      适合对延迟敏感但仍需要较好中文检索效果的场景。
+    pros:
+      - 推理速度较快
+      - 模型体积适中（0.4 GB）
+      - 在 CPU 上也能获得可接受的延迟
+    cons:
+      - 检索效果略低于 bge-large
+      - 维度较低（768），信息密度相对有限
+    recommended_use: 开发测试，或延迟敏感的在线场景
+    huggingface_url: https://huggingface.co/BAAI/bge-base-zh-v1.5
+
+  - id: bge-m3
+    full_name: BAAI/bge-m3
+    provider: BAAI
+    dimension: 1024
+    max_sequence_length: 8192
+    language: multilingual
+    model_size_gb: 2.2
+    description: >
+      多语言多功能 Embedding 模型，同时支持稠密检索、稀疏检索和多向量检索。
+      超长上下文（8192 tokens）使其特别适合处理长篇菜谱文档。
+    pros:
+      - 支持超长文档（8192 tokens）
+      - 多语言支持（中英混合效果好）
+      - 兼顾稠密和稀疏检索
+    cons:
+      - 模型体积最大（2.2 GB），推理资源需求高
+      - 在纯中文场景中相比 bge-large-zh 无明显优势
+    recommended_use: 长文档检索，或中英混合的菜谱知识库
+    huggingface_url: https://huggingface.co/BAAI/bge-m3
+
+  - id: multilingual-mpnet
+    full_name: sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+    provider: Sentence-Transformers
+    dimension: 768
+    max_sequence_length: 512
+    language: multilingual
+    model_size_gb: 1.1
+    description: >
+      通用多语言 Embedding 模型，覆盖 50+ 种语言。
+      不如 BGE 系列在中文上专精，但可作为基线对比模型。
+    pros:
+      - 多语言覆盖广
+      - 社区成熟，文档完善
+    cons:
+      - 中文专项指标低于 BGE 系列
+      - 适合作为 Baseline 而非最优选
+    recommended_use: 对比基线，多语言场景
+    huggingface_url: https://huggingface.co/sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+
+rerank_models:
+  - id: bge-reranker-v2-m3
+    full_name: BAAI/bge-reranker-v2-m3
+    provider: BAAI
+    model_size_gb: 2.2
+    language: multilingual
+    description: >
+      高性能多语言 Cross-Encoder Rerank 模型，对中文查询-文档对的相关性判断准确率高。
+      是 BGE 系列 Rerank 模型中效果最好的版本。
+    pros:
+      - 重排效果优秀
+      - 支持中英双语
+      - 与 BGE Embedding 系列配合效果好
+    cons:
+      - 模型体积较大（2.2 GB）
+      - Rerank 本身是串行操作，候选文档数量多时延迟显著增加
+    recommended_use: 生产环境，对 Rerank 效果要求高的场景
+    huggingface_url: https://huggingface.co/BAAI/bge-reranker-v2-m3
+
+  - id: mmarco-mMiniLM
+    full_name: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+    provider: UKP Lab
+    model_size_gb: 0.4
+    language: multilingual
+    description: >
+      轻量级多语言 Cross-Encoder，基于 MS MARCO 多语言版本训练。
+      在效果略低于 BGE Reranker 的前提下，推理速度更快、资源需求更低。
+    pros:
+      - 模型体积小（0.4 GB），推理速度快
+      - 多语言支持
+      - 在 CPU 上也能快速运行
+    cons:
+      - 重排效果略低于 bge-reranker-v2-m3
+      - 未针对中文菜谱场景专门优化
+    recommended_use: 资源受限场景，或作为轻量化方案
+    huggingface_url: https://huggingface.co/cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
