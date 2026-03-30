@@ -1,0 +1,17 @@
+# Cook-Agent 模型选型 Python 依赖
+
+# 核心 ML 框架
+sentence-transformers>=2.7.0
+torch>=2.1.0
+
+# 数值计算
+numpy>=1.24.0
+
+# 系统监控
+psutil>=5.9.0
+
+# 配置文件支持
+PyYAML>=6.0.1
+
+# 可视化（可选，用于生成对比图表）
+matplotlib>=3.7.0

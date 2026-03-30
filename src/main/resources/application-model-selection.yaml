@@ -1,0 +1,40 @@
+################################################################################
+# Cook-Agent 模型选型 Spring Boot 配置
+# 使用方式: 在 application.yml 中添加 spring.profiles.active: model-selection
+################################################################################
+
+spring:
+  config:
+    activate:
+      on-profile: model-selection
+
+app:
+  rag:
+    # Embedding 模型配置
+    embedding:
+      # 提供商: sentence-transformers | spring-ai
+      provider: ${RAG_EMBEDDING_PROVIDER:sentence-transformers}
+      # 模型名称（Hugging Face 格式）
+      model-name: ${RAG_EMBEDDING_MODEL:BAAI/bge-large-zh-v1.5}
+      # Sentence-Transformers HTTP 服务地址
+      service-url: ${RAG_EMBEDDING_SERVICE_URL:http://localhost:8000}
+
+    # Rerank 模型配置
+    rerank:
+      # 提供商: sentence-transformers（当前唯一支持的选项）
+      provider: ${RAG_RERANK_PROVIDER:sentence-transformers}
+      # 模型名称
+      model-name: ${RAG_RERANK_MODEL:BAAI/bge-reranker-v2-m3}
+      # Cross-Encoder HTTP 服务地址
+      service-url: ${RAG_RERANK_SERVICE_URL:http://localhost:8001}
+
+    # 混合检索配置
+    hybrid:
+      # 是否启用 Rerank
+      rerank-enabled: ${RAG_RERANK_ENABLED:true}
+      # 关键词检索权重
+      keyword-weight: ${RAG_KEYWORD_WEIGHT:0.4}
+      # 语义检索权重
+      semantic-weight: ${RAG_SEMANTIC_WEIGHT:0.6}
+      # 送入 Rerank 的候选文档数量上限
+      candidate-limit: ${RAG_CANDIDATE_LIMIT:50}
